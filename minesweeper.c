@@ -29,34 +29,33 @@ int main()
     int xUser, yUser;
     int arrX[MineNum], arrY[MineNum], n, i;
 
+    for (i = 0; i < MineNum; i++)
+    {
+        n = rand() % 30 + 1;
+        arrX[i] = n;
+    }
 
     for (i = 0; i < MineNum; i++)
-        {
-            n = rand() % 30 + 1;
-            arrX[i] = n;
-        }
+    {
+        n = rand() % 14 + 1;
+        arrY[i] = n;
+    }
 
-        for (i = 0; i < MineNum; i++)
-        {
-            n = rand() % 14 + 1;
-            arrY[i] = n;
-        }
+    printf("\n");
 
-        printf("\n");
+    for (i = 0; i < MineNum; i++)
+    {
+        printf("%d ", arrX[i]);
+    }
+    printf("\n");
+    for (i = 0; i < MineNum; i++)
+    {
+        printf("%d ", arrY[i]);
+    }
 
-        for (i = 0; i < MineNum; i++)
-        {
-            printf("%d ", arrX[i]);
-        }
-        printf("\n");
-        for (i = 0; i < MineNum; i++)
-        {
-            printf("%d ", arrY[i]);
-        }
-
-        printf("\n");
-        printf("\n");
-        printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("\n");
 
     while (1)
     {
@@ -65,20 +64,20 @@ int main()
         scanf("%d", &xUser);
         scanf("%d", &yUser);
 
-        if (firstInput == 9090)
+        if (firstInput == 1)
         {
             clearscreen();
             if (CheckX(xUser) == 1 && CheckY(yUser) == 1)
                 printf("BOOM\n");
         }
-        else if (firstInput = 9191)
+        else if (firstInput = 2)
         {
             clearscreen();
             if (Minefield[yUser - 1][xUser - 1] == 'P')
                 printf("Already Flagged!\n");
             Minefield[yUser - 1][xUser - 1] = 'P';
         }
-        else if (firstInput == 9292)
+        else if (firstInput == 3)
         {
             clearscreen();
             if (Minefield[yUser - 1][xUser - 1] == 'P')
