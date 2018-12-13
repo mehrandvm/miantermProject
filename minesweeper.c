@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+//#include <conio.h>
 #include <time.h>
-#include <windows.h>
+//#include <windows.h>
 #include <string.h>
 
 #define X 30
@@ -24,37 +24,43 @@ int CheckY(int yUser);
 int main()
 {
     createMap();
-    int i;
-
     char oneInput[3];
     int firstInput;
     int xUser, yUser;
-    int arrX, arrY;
+    int arrX[MineNum], arrY[MineNum], n, i;
+
+
+    for (i = 0; i < MineNum; i++)
+        {
+            n = rand() % 30 + 1;
+            arrX[i] = n;
+        }
+
+        for (i = 0; i < MineNum; i++)
+        {
+            n = rand() % 14 + 1;
+            arrY[i] = n;
+        }
+
+        printf("\n");
+
+        for (i = 0; i < MineNum; i++)
+        {
+            printf("%d ", arrX[i]);
+        }
+        printf("\n");
+        for (i = 0; i < MineNum; i++)
+        {
+            printf("%d ", arrY[i]);
+        }
+
+        printf("\n");
+        printf("\n");
+        printf("\n");
 
     while (1)
     {
         printMap();
-
-        for (i = 0; i < MineNum; i++)
-        {
-            n = rand() % 30 + 1;
-            printf("X: %d  ", n);
-            arrX[i] = n;
-        }
-
-        printf("\n");
-
-        int arrY[MineNum];
-        for (i = 0; i < MineNum; i++)
-        {
-            n = rand() % 14 + 1;
-            printf("Y: %d  ", n);
-            arrY[i] = n;
-        }
-        printf("\n");
-
-        //fgets(oneInput,4,stdin);
-        printf("string is: %s\n", oneInput);
         scanf("%d", &firstInput);
         scanf("%d", &xUser);
         scanf("%d", &yUser);
@@ -62,11 +68,10 @@ int main()
         if (firstInput == 9090)
         {
             clearscreen();
-            printf("Check");
             if (CheckX(xUser) == 1 && CheckY(yUser) == 1)
                 printf("BOOM\n");
         }
-        else if (oneInput == "cho")
+        else if (firstInput = 9191)
         {
             clearscreen();
             if (Minefield[yUser - 1][xUser - 1] == 'P')
@@ -85,7 +90,7 @@ int main()
 
 void clearscreen()
 {
-    system("cls");
+    system("clear");
 }
 
 void createMap()
