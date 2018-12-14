@@ -20,6 +20,7 @@ int arrX[10];
 int arrY[10];
 char Minefield[X][Y];
 
+void Reccursion(int xUser,int yUser);
 void printMap();
 void clearscreen();
 void createMap();
@@ -27,6 +28,7 @@ int getRandY();
 int getRandX();
 int CheckX(int xUser);
 int CheckY(int yUser);
+char c;
 
 int main()
 {
@@ -35,7 +37,7 @@ int main()
     int firstInput;
     int xUser, yUser;
     static int arrX[MineNum], arrY[MineNum];
-    int i, n;
+    int i, n, counter=0;
 
     for (i = 0; i < MineNum; i++)
     {
@@ -60,15 +62,6 @@ int main()
     {
         printf("%d ", arrY[i]);
     }
-
-    printf("\n");
-    printf("\n");
-    printf(ANSI_COLOR_RED "This text is RED!" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_GREEN "This text is GREEN!" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_YELLOW "This text is YELLOW!" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_BLUE "This text is BLUE!" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_MAGENTA "This text is MAGENTA!" ANSI_COLOR_RESET "\n");
-    printf(ANSI_COLOR_CYAN "This text is CYAN!" ANSI_COLOR_RESET "\n");
     printf("\n");
 
     while (1)
@@ -77,18 +70,45 @@ int main()
         scanf("%d", &firstInput);
         scanf("%d", &xUser);
         scanf("%d", &yUser);
+
         if (firstInput == 1)
         {
-
+            counter =0;
             for (i = 0; i < MineNum; i++)
             {
                 if (xUser == arrX[i] && yUser == arrY[i])
                 {
-                    printf("BOOM\n");
+                    printf(ANSI_COLOR_RED "**********GAME OVER**********\n" ANSI_COLOR_RESET);
+                    printf("\n");
                     for (i = 0; i < MineNum; i++)
                     {
-                        Minefield[arrX[i]][arrY[i]] = '*';
+                        Minefield[arrX[i]-1][arrY[i]-1] = '*';
                     }
+                }
+                else {
+                    
+                    if (xUser-1 == arrX[i] && yUser == arrY[i]) counter++;
+                    if (xUser+1 == arrX[i] && yUser == arrY[i]) counter++;
+                    if (xUser-1 == arrX[i] && yUser+1 == arrY[i]) counter++;
+                    if (xUser+1 == arrX[i] && yUser+1 == arrY[i]) counter++;
+                    if (xUser-1 == arrX[i] && yUser-1 == arrY[i]) counter++;
+                    if (xUser+1 == arrX[i] && yUser-1 == arrY[i]) counter++;
+                    if (xUser == arrX[i] && yUser+1 == arrY[i]) counter++;
+                    if (xUser == arrX[i] && yUser-1 == arrY[i]) counter++;
+                    //printf("counter is %d\n",counter);
+                    if (counter==0) c = ' ';
+                    if (counter==1) c = '1';
+                    if (counter==2) c = '2';
+                    if (counter==3) c = '3';
+                    if (counter==4) c = '4';
+                    if (counter==5) c = '5';
+                    if (counter==6) c = '6';
+                    if (counter==7) c = '7';
+                    if (counter==8) c = '8';
+                    if (counter==9) c = '9';
+                    //printf("c is %c\n",c);
+                    Minefield[xUser-1][yUser-1] = c;
+                    if(c==' ') Reccursion(xUser-1,yUser-1);
                 }
             }
         }
@@ -107,6 +127,10 @@ int main()
     }
 }
 
+void Reccursion(int xUser,int yUser){
+}
+
+
 void clearscreen()
 {
     system("clear");
@@ -115,9 +139,9 @@ void clearscreen()
 void createMap()
 {
     int i, j;
-    for (i = 0; i < Y; i++)
+    for (j = 0; j < Y; j++)
     {
-        for (j = 0; j < X; j++)
+        for (i = 0; i < X; i++)
         {
             Minefield[i][j] = 35;
         }
@@ -133,28 +157,39 @@ void printMap()
     {
         if (i / 10 == 0)
             printf(" ");
-        printf(ANSI_COLOR_CYAN "%d "ANSI_COLOR_RESET, i);
+        printf(ANSI_COLOR_CYAN "%d " ANSI_COLOR_RESET, i);
     }
 
     printf("\n");
 
-    for (i = 0; i < Y; i++)
+    for (j = 0; j < Y; j++)
     {
-        printf(ANSI_COLOR_CYAN" %d "ANSI_COLOR_RESET, i + 1);
-        if ((i + 1) / 10 == 0)
+        printf(ANSI_COLOR_CYAN " %d " ANSI_COLOR_RESET, j + 1);
+        if ((j + 1) / 10 == 0)
             printf(" ");
-        for (j = 0; j < X; j++)
+        for (i = 0; i < X; i++)
         {
             ANSI_COLOR_CYAN;
-            
-            if(Minefield[i][j]=='P'){
-            printf(ANSI_COLOR_YELLOW"%c"ANSI_COLOR_RESET, Minefield[i][j]);
+
+            if (Minefield[i][j] == 'P')
+            {
+                printf(ANSI_COLOR_YELLOW "%c" ANSI_COLOR_RESET, Minefield[i][j]);
             }
-            else if(Minefield[i][j]=='*'){
-            printf(ANSI_COLOR_RED"%c"ANSI_COLOR_RESET, Minefield[i][j]);
+            else if (Minefield[i][j] == '*')
+            {
+                printf(ANSI_COLOR_RED "%c" ANSI_COLOR_RESET, Minefield[i][j]);
             }
-            else{
-            printf(ANSI_COLOR_BLUE"%c"ANSI_COLOR_RESET, Minefield[i][j]);
+            else if (Minefield[i][j] == '1' || Minefield[i][j] == '2' || Minefield[i][j] == '3')
+            {
+                printf(ANSI_COLOR_GREEN "%c" ANSI_COLOR_RESET, Minefield[i][j]);
+            }
+            else if (Minefield[i][j] == '4' || Minefield[i][j] == '5' || Minefield[i][j] == '6')
+            {
+                printf(ANSI_COLOR_MAGENTA "%c" ANSI_COLOR_RESET, Minefield[i][j]);
+            }
+            else
+            {
+                printf(ANSI_COLOR_BLUE "%c" ANSI_COLOR_RESET, Minefield[i][j]);
             }
             printf("  ");
         }
